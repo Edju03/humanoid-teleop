@@ -4,7 +4,7 @@ Real-time teleoperation system for Unitree G1 robot using HybrIK pose estimation
 
 ## Requirements
 
-- HybrIK installed in `/home/vb/workspace/HybrIK`
+- HybrIK framework
 - RealSense camera (D435/D435i)
 - CUDA-capable GPU
 - Python packages: `torch`, `mujoco`, `pyrealsense2`, `opencv-python`
@@ -12,7 +12,7 @@ Real-time teleoperation system for Unitree G1 robot using HybrIK pose estimation
 ## Usage
 
 ```bash
-# Pose estimation demo
+# HybrIK pose estimation
 ./run_demo.sh 1
 
 # G1 teleoperation with MuJoCo
@@ -22,11 +22,19 @@ Real-time teleoperation system for Unitree G1 robot using HybrIK pose estimation
 ## Model Configuration
 
 **23 DOF** (Optimized for vision-based teleoperation)
-- 12 DOF legs (6 per leg)
-- 3 DOF waist
-- 8 DOF arms (4 per arm, no wrists)
 
-Wrists are disabled since HybrIK cannot extract wrist rotation from vision alone. This matches the H2O/ASAP teleoperation design.
+**Legs (12 DOF total):**
+- Left/Right hip: pitch, roll, yaw joints
+- Left/Right knee: single axis joint
+- Left/Right ankle: pitch, roll joints
+
+**Waist (3 DOF):**
+- waist_yaw, waist_roll, waist_pitch joints
+
+**Arms (8 DOF total):**
+- Left/Right shoulder: pitch, roll, yaw joints
+- Left/Right elbow: single axis joint
+- No wrist control (HybrIK provides 3D position only, not rotation)
 
 ## System Architecture
 
