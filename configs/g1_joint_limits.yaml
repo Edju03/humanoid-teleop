@@ -1,0 +1,50 @@
+arm_joints:
+  left_shoulder_pitch_joint:
+    lower: -3.0892
+    upper: 2.6704
+    effort: 25.0
+    velocity: 37.0
+
+  left_shoulder_roll_joint:
+    lower: -1.5882
+    upper: 2.2515
+    effort: 25.0
+    velocity: 37.0
+
+  left_shoulder_yaw_joint:
+    lower: -2.618
+    upper: 2.618
+    effort: 25.0
+    velocity: 37.0
+
+  left_elbow_joint:
+    lower: -1.0472
+    upper: 2.0944
+    effort: 25.0
+    velocity: 37.0
+
+  right_shoulder_pitch_joint:
+    lower: -3.0892
+    upper: 2.6704
+    effort: 25.0
+    velocity: 37.0
+
+  right_shoulder_roll_joint:
+    lower: -2.2515
+    upper: 1.5882
+    effort: 25.0
+    velocity: 37.0
+
+  right_shoulder_yaw_joint:
+    lower: -2.618
+    upper: 2.618
+    effort: 25.0
+    velocity: 37.0
+
+  right_elbow_joint:
+    lower: -1.0472
+    upper: 2.0944
+    effort: 25.0
+    velocity: 37.0
+
+safety_factor: 0.9
