@@ -1,49 +1,45 @@
-# G1 HybrIK Teleoperation
+# G1 Humanoid Teleoperation
 
-Real-time teleoperation system for Unitree G1 robot using HybrIK pose estimation.
+Real-time teleoperation system for Unitree G1 humanoid robot using HybrIK pose estimation and IK solver.
 
-## Requirements
+## Components
 
-- HybrIK framework
-- RealSense camera (D435/D435i)
-- CUDA-capable GPU
-- Python packages: `torch`, `mujoco`, `pyrealsense2`, `opencv-python`
+- **`g1_teleop_from_hybrik.py`** - Main teleoperation bridge connecting HybrIK pose extraction to G1 robot control
+- **`direct_control_demo.py`** - Standalone demo with simulated or real sensor data
+- **`src/teleop/robot_arm_ik.py`** - IK solver using CasADi and Pinocchio
+
+## Setup
+
+1. Install dependencies:
+```bash
+conda create -n tv python=3.8
+conda activate tv
+pip install mujoco pinocchio casadi meshcat
+```
+
+2. Setup HybrIK in separate directory:
+```bash
+git clone https://github.com/Jeff-sjtu/HybrIK.git
+# Follow HybrIK installation instructions
+```
 
 ## Usage
 
+### Real-time teleoperation with RealSense camera:
 ```bash
-# HybrIK pose estimation
-./run_demo.sh 1
-
-# G1 teleoperation with MuJoCo
-./run_demo.sh 2
+conda activate tv
+python g1_teleop_from_hybrik.py
 ```
 
-## Model Configuration
-
-**23 DOF** (Optimized for vision-based teleoperation)
-
-**Legs (12 DOF total):**
-- Left/Right hip: pitch, roll, yaw joints
-- Left/Right knee: single axis joint
-- Left/Right ankle: pitch, roll joints
-
-**Waist (3 DOF):**
-- waist_yaw, waist_roll, waist_pitch joints
-
-**Arms (8 DOF total):**
-- Left/Right shoulder: pitch, roll, yaw joints
-- Left/Right elbow: single axis joint
-- No wrist control (HybrIK provides 3D position only, not rotation)
-
-## System Architecture
-
+### Run demo:
+```bash
+./run_demo.sh
 ```
-Simulation:
-Camera → HybrIK → Joint Mapping → MuJoCo
-         (30 FPS)   (23 DOF)       (Physics)
 
-Hardware (Target):
-Camera → HybrIK → Joint Mapping → ROS2/SDK → G1 Robot
-         (30 FPS)   (23 DOF)       (Control)   (Hardware)
-```
+## Architecture
+
+The system uses a two-process architecture:
+- HybrIK process extracts H2O keypoints from RealSense camera
+- Main process performs IK solving and robot control
+
+ASAP retargeting scale factor: 0.7517
